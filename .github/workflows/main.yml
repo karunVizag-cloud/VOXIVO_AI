@@ -9,7 +9,7 @@ on:
     branches:
       - main
       - master
-  workflow_dispatch: # GitHub వెబ్‌సైట్ నుండి బటన్ క్లిక్ చేసి మాన్యువల్‌గా రన్ చేయడానికి
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,11 +17,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. ప్రాజెక్ట్ కోడ్‌ను చెకౌట్ చేస్తుంది
-      - name: Checkout Code
+      # 1. రిపోజిటరీ కోడ్‌ను చెకౌట్ చేస్తుంది
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. ప్రాజెక్ట్‌కి అవసరమైన Java 17 (JDK 17) ని సెటప్ చేస్తుంది
+      # 2. Java 17 (JDK 17) ని సెటప్ చేస్తుంది
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -29,24 +29,30 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      # 3. Android SDK ని సెటప్ చేస్తుంది
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      # 3. Android SDK, Platform Tools & Licenses ని సరిగ్గా సెటప్ చేసే స్టెప్ (ఎర్రర్ రాకుండా ఫిక్స్ చేయబడింది)
+      - name: Set up Android SDK & Platform Tools
+        run: |
+          echo "Setting up Android SDK environment..."
+          # లైసెన్సులన్నింటినీ ఆటోమేటిక్‌గా అంగీకరిస్తుంది
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          
+          # Platform-tools మరియు Android 35 SDK (Android 15) ని ఇన్‌స్టాల్ చేస్తుంది
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0" || true
 
-      # 4. Gradle Wrapper ని సిద్ధం చేసి, ఎగ్జిక్యూట్ అనుమతులు ఇస్తుంది
+      # 4. Gradle Wrapper ని ప్రిపేర్ చేస్తుంది
       - name: Prepare Gradle Wrapper
         run: |
           if [ ! -f "./gradlew" ]; then
-            echo "gradlew not found, generating wrapper..."
-            gradle wrapper
+            echo "gradlew not found. Generating wrapper..."
+            gradle wrapper --gradle-version 8.7
           fi
           chmod +x ./gradlew
 
       # 5. VOXIVO AI Debug APK ని బిల్డ్ చేస్తుంది
-      - name: Build Android APK
-        run: ./gradlew assembleDebug --stacktrace
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
 
-      # 6. తయారైన APK ఫైల్‌ను డౌన్‌లోడ్ చేసుకోవడానికి Artifact గా అప్‌లోడ్ చేస్తుంది
+      # 6. తయారైన APK ని Artifact గా డౌన్‌లోడ్ చేసుకోవడానికి అప్‌లోడ్ చేస్తుంది
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:

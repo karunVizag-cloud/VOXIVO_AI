@@ -1,0 +1,55 @@
+name: Build VOXIVO AI APK
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch: # GitHub వెబ్‌సైట్ నుండి బటన్ క్లిక్ చేసి మాన్యువల్‌గా రన్ చేయడానికి
+
+jobs:
+  build:
+    name: Build Debug APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. ప్రాజెక్ట్ కోడ్‌ను చెకౌట్ చేస్తుంది
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. ప్రాజెక్ట్‌కి అవసరమైన Java 17 (JDK 17) ని సెటప్ చేస్తుంది
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      # 3. Android SDK ని సెటప్ చేస్తుంది
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      # 4. Gradle Wrapper ని సిద్ధం చేసి, ఎగ్జిక్యూట్ అనుమతులు ఇస్తుంది
+      - name: Prepare Gradle Wrapper
+        run: |
+          if [ ! -f "./gradlew" ]; then
+            echo "gradlew not found, generating wrapper..."
+            gradle wrapper
+          fi
+          chmod +x ./gradlew
+
+      # 5. VOXIVO AI Debug APK ని బిల్డ్ చేస్తుంది
+      - name: Build Android APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      # 6. తయారైన APK ఫైల్‌ను డౌన్‌లోడ్ చేసుకోవడానికి Artifact గా అప్‌లోడ్ చేస్తుంది
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VoxivoAI-app-debug
+          path: app/build/outputs/apk/debug/*.apk
+          retention-days: 7

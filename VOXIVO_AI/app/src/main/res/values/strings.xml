@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">VOXIVO AI</string>
+    <string name="tagline">YOUR VOICE. YOUR INTELLIGENCE.</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_calendar">Calendar</string>
+    <string name="nav_tasks">Tasks</string>
+    <string name="nav_reports">Reports</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Reminders & Alarm -->
+    <string name="alarm_channel_name">VOXIVO AI Reminders</string>
+    <string name="alarm_channel_desc">Critical and scheduled reminder alarms</string>
+    <string name="snooze">Snooze</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="mark_complete">Mark Done</string>
+    <string name="snooze_5m">+5 min</string>
+    <string name="snooze_10m">+10 min</string>
+    <string name="snooze_15m">+15 min</string>
+
+    <!-- Voice Personalities -->
+    <string name="voice_friendly">Friendly</string>
+    <string name="voice_pro">Professional</string>
+    <string name="voice_calm">Calm</string>
+    <string name="voice_motivate">Motivate</string>
+    <string name="voice_polite">Polite</string>
+    <string name="voice_firm">Firm</string>
+</resources>

@@ -1,0 +1,23 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Futuristic V Logo with Electric Glow -->
+    <path
+        android:strokeColor="#1769FF"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M34,34 L54,74 L74,34" />
+    <path
+        android:strokeColor="#00F0FF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M40,36 L54,66 L68,36" />
+    <!-- Center AI Orb Core -->
+    <path
+        android:fillColor="#00F0FF"
+        android:pathData="M54,46m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0" />
+</vector>

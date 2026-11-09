@@ -1,0 +1,21 @@
+<resources>
+    <color name="electric_blue">#1769FF</color>
+    <color name="neon_cyan">#00F0FF</color>
+    <color name="deep_navy">#071426</color>
+    <color name="dark_background">#050D1A</color>
+    <color name="light_background">#F4F8FF</color>
+
+    <color name="card_dark">#101E36</color>
+    <color name="card_border_dark">#1E355B</color>
+    <color name="text_primary_dark">#FFFFFF</color>
+    <color name="text_secondary_dark">#94A3B8</color>
+
+    <color name="card_light">#FFFFFF</color>
+    <color name="card_border_light">#E2E8F0</color>
+    <color name="text_primary_light">#0F172A</color>
+    <color name="text_secondary_light">#64748B</color>
+
+    <color name="neon_green">#10B981</color>
+    <color name="neon_amber">#F59E0B</color>
+    <color name="neon_rose">#F43F5E</color>
+</resources>
